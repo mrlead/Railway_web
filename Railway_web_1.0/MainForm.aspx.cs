@@ -28,7 +28,7 @@ namespace Railway_web_1._0
         {
             try
             {
-                book = Workbook.Load("../../1.xls");
+                book = Workbook.Load("C:\\1.xls");
             }
             catch
             {
@@ -126,7 +126,7 @@ namespace Railway_web_1._0
             return true;
         }
 
-        private void tb_from_TextChanged(object sender, System.EventArgs e)
+        protected void tb_from_TextChanged(object sender, EventArgs e)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace Railway_web_1._0
             }
         }
 
-        private void tb_to_TextChanged(object sender, System.EventArgs e)
+        protected void tb_to_TextChanged(object sender, EventArgs e)
         {
             try
             {

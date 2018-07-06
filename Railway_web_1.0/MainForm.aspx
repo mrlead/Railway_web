@@ -21,8 +21,8 @@
 <body>
     <form id="MainForm" runat="server">
         <div style="height: 520px">
-            <asp:TextBox ID="tb_from" runat="server"></asp:TextBox>
-            <asp:TextBox ID="tb_to" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tb_from" runat="server" OnTextChanged="tb_from_TextChanged"></asp:TextBox>
+            <asp:TextBox ID="tb_to" runat="server" OnTextChanged="tb_to_TextChanged"></asp:TextBox>
             <br />
             <asp:DropDownList ID="cb_from" runat="server">
             </asp:DropDownList>
