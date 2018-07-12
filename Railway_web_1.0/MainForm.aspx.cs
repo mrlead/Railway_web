@@ -50,6 +50,10 @@ namespace Railway_web_1._0
             cb_from.SelectedIndex = 0;
             cb_to.SelectedIndex = 0;
             Init_train();
+            string[] s = new string[5];
+            s[0] = "Hello";
+            s[1] = "World";
+            
         }
 
         //Разбиение списка на отдельные поезда
@@ -180,6 +184,11 @@ namespace Railway_web_1._0
             {
                 bEnter.Enabled = cb_to.Enabled & cb_from.Enabled;
             }
+        }
+
+        protected void dg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
         ///Обработка нажатия кнопки "Ввод"
