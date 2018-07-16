@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MainForm.aspx" />
+    <Content Include="StyleSheet1.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
