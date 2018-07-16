@@ -31,6 +31,15 @@ namespace Railway_web_1._0 {
         protected global::System.Web.UI.WebControls.TextBox tb_to;
         
         /// <summary>
+        /// Calendar1 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar Calendar1;
+        
+        /// <summary>
         /// cb_from элемент управления.
         /// </summary>
         /// <remarks>

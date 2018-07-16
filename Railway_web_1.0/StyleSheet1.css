@@ -1,20 +1,21 @@
-﻿body {
-   
-}
+﻿body {}
 
-.cb_from {
+.cb_from 
+{
     padding: 10px;
     border: 2px solid red;
     border-radius: 20px;
 }
 
-.cb_to {
+.cb_to 
+{
     padding: 10px;
     border: 2px solid red;
     border-radius: 20px;
 }
 
-.button {
+.button 
+{
     -webkit-transition-duration: 0.8s;
     transition-duration: 0.8s;
     padding: 10px;
@@ -23,11 +24,12 @@
     outline: none;
 }
 
-.button:hover {
-        background-color: rgb(216, 1, 0); /* red */
-        color: white;
-        padding: 10px;
-        outline: none;
+.button:hover 
+{
+    background-color: rgb(216, 1, 0); /* red */
+    color: white;
+    padding: 10px;
+    outline: none;
 }
 
 .textbox_1 {
@@ -54,6 +56,12 @@
     border: 2px solid red;
     border-radius: 20px;
     outline: none;
+}
+
+.calendar 
+{
+    outline: none;
+    right:0;
 }
 
 html {
