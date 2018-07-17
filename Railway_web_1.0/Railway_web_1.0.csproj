@@ -49,10 +49,10 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Security">
-      <HintPath>..\..\..\..\Desktop\Railway\Railway\Mono.Security.dll</HintPath>
+      <HintPath>..\..\Railway\Railway\Mono.Security.dll</HintPath>
     </Reference>
     <Reference Include="Npgsql">
-      <HintPath>..\..\..\..\Desktop\Railway\Railway\Npgsql.dll</HintPath>
+      <HintPath>..\..\Railway\Railway\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -79,7 +79,6 @@
   <ItemGroup>
     <Content Include="MainForm.aspx" />
     <Content Include="StyleSheet1.css" />
-    <Content Include="updtlst.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

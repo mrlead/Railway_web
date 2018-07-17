@@ -23,9 +23,6 @@ namespace Railway_web_1._0
 
         string conn_string = "Server=127.0.0.1; Port=5432; User Id=postgres; Password=1236321; Database=postgres";
         string sql = "select * from trainlist_view";
-        //List<string> station_name = new List<string>();
-        //List<Train> train_list = new List<Train>(Save.trains);
-        //List<Train> selected_trains = new List<Train>(Save.list);
         Train tr = new Train();
         DataTable dt = new DataTable();
         DataTable dt_1 = new DataTable();
@@ -61,10 +58,6 @@ namespace Railway_web_1._0
                 Save.station_name.Sort();
                 Reset_list(cb_from);
                 Reset_list(cb_to);
-                /*(null, null);
-                tb_to_TextChanged(null, null);
-                cb_from_SelectedIndexChanged(null, null);
-                cb_to_SelectedIndexChanged(null, null);*/
                 try
                 {
                     cb_from.SelectedIndex = cb_from.Items.IndexOf(new ListItem(Save.from_name));
@@ -88,6 +81,7 @@ namespace Railway_web_1._0
         //Разбиение списка на отдельные поезда
         private void Init_train()
         {
+            Save.trains.Clear();
             for (int i = 0; i < tr.unum.Count;)
             {
                 Train train = new Train();
@@ -177,6 +171,7 @@ namespace Railway_web_1._0
                         cb_from.Items.Add(item);
                     }
                 }
+                cb_from.SelectedIndex = 0;
             }
             catch
             {
@@ -205,6 +200,7 @@ namespace Railway_web_1._0
                         cb_to.Items.Add(item);
                     }
                 }
+                cb_to.SelectedIndex = 0;
             }
             catch
             {
@@ -273,6 +269,7 @@ namespace Railway_web_1._0
             if (dt.Rows.Count == 1)
             {
                 //MessageBox.Show("Отсутствуют пригородные поезда");
+                return;
             }
             dg.DataSource = dt;
             dg.DataBind();
@@ -285,21 +282,22 @@ namespace Railway_web_1._0
             dt_1.Columns.Add("Пункт");
             dt_1.Columns.Add("Время приб.");
             dt_1.Columns.Add("Время отпр.");
+            int index = dg.SelectedIndex;
 
             label3.Text = null;
             try
             {
-                for (int i = 0; i < Save.selected_trains[Save.selected_train_indx].station.Count; i++)
+                for (int i = 0; i < Save.selected_trains[index].station.Count; i++)
                 {
                     DataRow workRow = dt_1.NewRow();
-                    workRow[0] = Save.selected_trains[Save.selected_train_indx].station[i];
+                    workRow[0] = Save.selected_trains[index].station[i];
                     if (i != 0)
-                        workRow[1] = Save.selected_trains[Save.selected_train_indx].to_time[i];
-                    if (i != Save.selected_trains[Save.selected_train_indx].station.Count - 1)
-                        workRow[2] = Save.selected_trains[Save.selected_train_indx].from_time[i];
+                        workRow[1] = Save.selected_trains[index].to_time[i];
+                    if (i != Save.selected_trains[index].station.Count - 1)
+                        workRow[2] = Save.selected_trains[index].from_time[i];
                     dt_1.Rows.Add(workRow);
                 }
-                label3.Text = "Поезд \"" + Save.selected_trains[Save.selected_train_indx].station[0] + "-" + Save.selected_trains[Save.selected_train_indx].station[Save.selected_trains[Save.selected_train_indx].station.Count - 1] + "\"";
+                label3.Text = "Поезд \"" + Save.selected_trains[index].station[0] + "-" + Save.selected_trains[index].station[Save.selected_trains[index].station.Count - 1] + "\"";
                 dg_1.DataSource = dt_1;
                 dg_1.DataBind();
             }
