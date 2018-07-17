@@ -231,7 +231,7 @@ namespace Railway_web_1._0
 
             if (from == to)
             {
-                //MessageBox.Show("Пункты отправки и прибытия не должны совпадать");
+                MessageBox.Show("Пункты отправки и прибытия не должны совпадать");
                 return;
             }
             int i = 0;
@@ -268,12 +268,12 @@ namespace Railway_web_1._0
             }
             if (dt.Rows.Count == 1)
             {
-                //MessageBox.Show("Отсутствуют пригородные поезда");
+                MessageBox.Show("Отсутствуют пригородные поезда");
             }
             Save.list = new List<Train>(selected_trains);
             dg.DataSource = dt;
             dg.DataBind();
-
+            Label4.Visible = true;
         }
 
         protected void dg_SelectedIndexChanged(object sender, EventArgs e)
@@ -300,6 +300,7 @@ namespace Railway_web_1._0
                 label3.Text = "Поезд \"" + selected_trains[index].station[0] + "-" + selected_trains[index].station[selected_trains[index].station.Count - 1] + "\"";
                 dg_1.DataSource = dt_1;
                 dg_1.DataBind();
+                Label5.Visible = true;
             }
             catch { }
         }

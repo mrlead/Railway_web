@@ -89,6 +89,7 @@
     <Compile Include="MainForm.aspx.designer.cs">
       <DependentUpon>MainForm.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MessageBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Save.cs" />
   </ItemGroup>
