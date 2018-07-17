@@ -79,6 +79,7 @@
   <ItemGroup>
     <Content Include="MainForm.aspx" />
     <Content Include="StyleSheet1.css" />
+    <Content Include="updtlst.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

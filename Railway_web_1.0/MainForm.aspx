@@ -7,6 +7,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
     <link href="StyleSheet1.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        #MainForm {
+            height: 600px;
+        }
+        #cal_1 {
+            width: 1263px;
+            height: 252px;
+        }
+        #cal_2 {
+            width: 256px;
+        }
+        #cal_center {
+            width: 251px;
+        }
+    </style>
 </head>
 <body>
     <form id="MainForm" runat="server">
@@ -16,16 +31,16 @@
         <asp:UpdatePanel id="UpdatePanel1" runat="server" RenderMode="Inline">
             <ContentTemplate>
                 <fieldset>
-               <asp:TextBox ID="tb_from" runat="server" OnTextChanged="tb_from_TextChanged" CssClass="textbox_1" Font-Names="Times New Roman" Font-Size="18pt" Width="200px" AutoPostBack="True" ></asp:TextBox>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:TextBox ID="tb_to" runat="server" OnTextChanged="tb_to_TextChanged" CssClass="textbox_2" Font-Names="Times New Roman" Font-Size="18pt" Width="200px" AutoPostBack="True"></asp:TextBox>
+               <asp:TextBox ID="tb_from" runat="server" OnTextChanged="tb_from_TextChanged" CssClass="textbox_1" Font-Names="Times New Roman" Font-Size="18pt" Width="200px" AutoPostBack="True" ClientIDMode="Static" ></asp:TextBox>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:TextBox ID="tb_to" runat="server" OnTextChanged="tb_to_TextChanged" CssClass="textbox_2" Font-Names="Times New Roman" Font-Size="18pt" Width="200px" AutoPostBack="True" ClientIDMode="Static"></asp:TextBox>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;<br />
             <br />
-            <asp:DropDownList ID="cb_from" runat="server" CssClass="cb_from" Font-Names="Vrinda" Font-Size="18pt" Width="225px" AutoPostBack="True" OnSelectedIndexChanged="cb_from_SelectedIndexChanged" OnTextChanged="cb_from_TextChanged">
+            <asp:DropDownList ID="cb_from" runat="server" CssClass="cb_from" Font-Names="Vrinda" Font-Size="18pt" Width="225px" AutoPostBack="True" OnSelectedIndexChanged="cb_from_SelectedIndexChanged" ClientIDMode="Static">
             </asp:DropDownList>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:DropDownList ID="cb_to" runat="server" CssClass="cb_to" Font-Names="Vrinda" Font-Size="18pt" Width="224px" AutoPostBack="True" OnSelectedIndexChanged="cb_to_SelectedIndexChanged">
+            <asp:DropDownList ID="cb_to" runat="server" CssClass="cb_to" Font-Names="Vrinda" Font-Size="18pt" Width="224px" AutoPostBack="True" OnSelectedIndexChanged="cb_to_SelectedIndexChanged" ClientIDMode="Static">
             </asp:DropDownList>
                         <br />
             <br />
@@ -52,6 +67,7 @@
             <br />
                     <asp:UpdatePanel id="UpdatePanel4" runat="server" RenderMode="Inline">
             <ContentTemplate>
+
             <asp:GridView ID="dg_1" runat="server" CellPadding="4" ForeColor="Black" Width="1259px" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellSpacing="2" CssClass="table" Font-Names="Times New Roman" ShowHeaderWhenEmpty="True" Height="149px" Caption="Полный маршрут выбранного поезда">
                 <FooterStyle BackColor="#CCCCCC" />
                 <HeaderStyle BackColor="#F72125" Font-Bold="True" ForeColor="Black" BorderStyle="Groove" Font-Names="Times New Roman" />
