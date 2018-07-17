@@ -10,69 +10,101 @@
 </head>
 <body>
     <form id="MainForm" runat="server">
-        <div style="height: 520px">
-            <asp:TextBox ID="tb_from" runat="server" OnTextChanged="tb_from_TextChanged" CssClass="textbox_1" Font-Names="Times New Roman" Font-Size="18pt" Width="200px"></asp:TextBox>
+        <div style="height: 1025px; width: 1264px">
+        <asp:ScriptManager id="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <asp:UpdatePanel id="UpdatePanel1" runat="server" RenderMode="Inline">
+            <ContentTemplate>
+                <fieldset>
+               <asp:TextBox ID="tb_from" runat="server" OnTextChanged="tb_from_TextChanged" CssClass="textbox_1" Font-Names="Times New Roman" Font-Size="18pt" Width="200px" AutoPostBack="True" ></asp:TextBox>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:TextBox ID="tb_to" runat="server" OnTextChanged="tb_to_TextChanged" CssClass="textbox_2" Font-Names="Times New Roman" Font-Size="18pt" Width="200px"></asp:TextBox>
+            <asp:TextBox ID="tb_to" runat="server" OnTextChanged="tb_to_TextChanged" CssClass="textbox_2" Font-Names="Times New Roman" Font-Size="18pt" Width="200px" AutoPostBack="True"></asp:TextBox>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Calendar ID="Calendar1" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" CssClass="calendar" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px">
-                <DayHeaderStyle BackColor="#99CCCC" ForeColor="#336666" Height="1px" />
-                <NextPrevStyle Font-Size="8pt" ForeColor="#CCCCFF" />
-                <OtherMonthDayStyle ForeColor="#999999" />
-                <SelectedDayStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-                <SelectorStyle BackColor="#99CCCC" ForeColor="#336666" />
-                <TitleStyle BackColor="#003399" BorderColor="#3366CC" BorderWidth="1px" Font-Bold="True" Font-Size="10pt" ForeColor="#CCCCFF" Height="25px" />
-                <TodayDayStyle BackColor="#99CCCC" ForeColor="White" />
-                <WeekendDayStyle BackColor="#CCCCFF" />
-            </asp:Calendar>
+                    &nbsp;<br />
             <br />
-            <br />
-            <asp:DropDownList ID="cb_from" runat="server" CssClass="cb_from" Font-Names="Vrinda" Font-Size="18pt" Width="225px">
+            <asp:DropDownList ID="cb_from" runat="server" CssClass="cb_from" Font-Names="Vrinda" Font-Size="18pt" Width="225px" AutoPostBack="True" OnSelectedIndexChanged="cb_from_SelectedIndexChanged" OnTextChanged="cb_from_TextChanged">
             </asp:DropDownList>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:DropDownList ID="cb_to" runat="server" CssClass="cb_to" Font-Names="Vrinda" Font-Size="18pt" Width="224px">
+            <asp:DropDownList ID="cb_to" runat="server" CssClass="cb_to" Font-Names="Vrinda" Font-Size="18pt" Width="224px" AutoPostBack="True" OnSelectedIndexChanged="cb_to_SelectedIndexChanged">
             </asp:DropDownList>
-            <br />
+                        <br />
             <br />
             <asp:Button ID="bEnter" runat="server" Text="Отобразить расписание" Width="576px" CssClass="button" Font-Bold="False" Font-Italic="False" Font-Names="Vrinda" Font-Size="18pt" OnClick="bEnter_Click" />
             <br />
             <br />
-            <asp:GridView ID="dg" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="Black" Height="149px" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellSpacing="2">
-                <Columns>
-                    <asp:BoundField HeaderText="Номер поезда" ReadOnly="True" />
-                    <asp:BoundField HeaderText="Пункт отправки" ReadOnly="True" />
-                    <asp:BoundField HeaderText="Пункт прибытия" ReadOnly="True" />
-                    <asp:BoundField HeaderText="Время отпр." ReadOnly="True" />
-                    <asp:BoundField HeaderText="Время приб." ReadOnly="True" />
-                </Columns>
+                    <asp:UpdatePanel id="UpdatePanel2" runat="server" RenderMode="Inline">
+            <ContentTemplate>
+            <asp:GridView ID="dg" runat="server" CellPadding="4" ForeColor="Black" Height="149px" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellSpacing="2" AutoGenerateSelectButton="True" CssClass="table" Font-Names="Times New Roman" ShowHeaderWhenEmpty="True" Width="1258px" OnSelectedIndexChanged="dg_SelectedIndexChanged" Caption="Поезда по вашему запросу">
                 <FooterStyle BackColor="#CCCCCC" />
-                <HeaderStyle BackColor="#FF9FAB" Font-Bold="True" ForeColor="Black" />
+                <HeaderStyle BackColor="#F8363C" Font-Bold="True" ForeColor="Black" Font-Names="Times New Roman" />
                 <PagerStyle BackColor="#CCCCCC" ForeColor="Black" HorizontalAlign="Left" />
                 <RowStyle BackColor="White" />
-                <SelectedRowStyle BackColor="#000099" Font-Bold="True" ForeColor="White" />
+                <SelectedRowStyle BackColor="#FF9D9D" Font-Bold="True" ForeColor="Black" Font-Names="Times New Roman" />
                 <SortedAscendingCellStyle BackColor="#F1F1F1" />
                 <SortedAscendingHeaderStyle BackColor="#808080" />
                 <SortedDescendingCellStyle BackColor="#CAC9C9" />
                 <SortedDescendingHeaderStyle BackColor="#383838" />
             </asp:GridView>
+                </ContentTemplate>
+        </asp:UpdatePanel>
+                            &nbsp;<br />
+                            <asp:Label ID="label3" runat="server"></asp:Label>
             <br />
-            <asp:GridView ID="dg_1" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="Black" Width="580px" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellSpacing="2" CssClass="table">
-                <Columns>
-                    <asp:BoundField HeaderText="Пункт" />
-                    <asp:BoundField HeaderText="Время приб." />
-                    <asp:BoundField HeaderText="Время отпр." />
-                </Columns>
+                    <asp:UpdatePanel id="UpdatePanel4" runat="server" RenderMode="Inline">
+            <ContentTemplate>
+            <asp:GridView ID="dg_1" runat="server" CellPadding="4" ForeColor="Black" Width="1259px" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellSpacing="2" CssClass="table" Font-Names="Times New Roman" ShowHeaderWhenEmpty="True" Height="149px" Caption="Полный маршрут выбранного поезда">
                 <FooterStyle BackColor="#CCCCCC" />
-                <HeaderStyle BackColor="#FF9FAB" Font-Bold="True" ForeColor="White" BorderStyle="Groove" />
+                <HeaderStyle BackColor="#F72125" Font-Bold="True" ForeColor="Black" BorderStyle="Groove" Font-Names="Times New Roman" />
                 <PagerStyle BackColor="#CCCCCC" ForeColor="Black" HorizontalAlign="Left" />
                 <RowStyle BackColor="White" />
-                <SelectedRowStyle BackColor="#000099" Font-Bold="True" ForeColor="White" />
+                <SelectedRowStyle BackColor="#FF5050" Font-Bold="True" ForeColor="Black" Font-Names="Times New Roman" />
                 <SortedAscendingCellStyle BackColor="#F1F1F1" />
                 <SortedAscendingHeaderStyle BackColor="#808080" />
                 <SortedDescendingCellStyle BackColor="#CAC9C9" />
                 <SortedDescendingHeaderStyle BackColor="#383838" />
             </asp:GridView>
-        </div>
+                 </ContentTemplate>
+        </asp:UpdatePanel>
+                </fieldset>
+                <br />
+                <br />
+            </ContentTemplate>
+        </asp:UpdatePanel>
+            
+            <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+            <ContentTemplate>
+                <div class="container">
+                  <div class="box">
+                    <div>
+                        &nbsp;<asp:Calendar ID="date_low" runat="server" BackColor="White" BorderColor="Black" BorderStyle="Solid" CellSpacing="1" Font-Names="Verdana" Font-Size="9pt" ForeColor="Black" Height="250px" NextPrevFormat="ShortMonth" Width="412px" CssClass="calendar" OnSelectionChanged="date_low_SelectionChanged">
+                    <DayHeaderStyle Font-Bold="True" Font-Size="8pt" ForeColor="#333333" Height="8pt" />
+                    <DayStyle BackColor="#CCCCCC" />
+                    <NextPrevStyle Font-Bold="True" Font-Size="8pt" ForeColor="White" />
+                    <OtherMonthDayStyle ForeColor="#999999" />
+                    <SelectedDayStyle BackColor="#333399" ForeColor="White" />
+                    <TitleStyle BackColor="#E9211F" BorderStyle="Solid" Font-Bold="True" Font-Size="12pt" ForeColor="White" Height="12pt" />
+                    <TodayDayStyle BackColor="#999999" ForeColor="White" />
+                    </asp:Calendar>
+                        &nbsp;&nbsp;
+                    </div>
+                    <div>
+                        <asp:Button ID="Button1" runat="server" CssClass="button" OnClick="Button1_Click1" Text="Сегодня" />
+                      </div>
+                    <div>&nbsp;<asp:Calendar ID="date_high" runat="server" BackColor="White" BorderColor="Black" BorderStyle="Solid" CellSpacing="1" Font-Names="Verdana" Font-Size="9pt" ForeColor="Black" Height="250px" NextPrevFormat="ShortMonth" Width="329px" CssClass="calendar" OnSelectionChanged="date_high_SelectionChanged">
+                    <DayHeaderStyle Font-Bold="True" Font-Size="8pt" ForeColor="#333333" Height="8pt" />
+                    <DayStyle BackColor="#CCCCCC" />
+                    <NextPrevStyle Font-Bold="True" Font-Size="8pt" ForeColor="White" />
+                    <OtherMonthDayStyle ForeColor="#999999" />
+                    <SelectedDayStyle BackColor="#333399" ForeColor="White" />
+                    <TitleStyle BackColor="#E9211F" BorderStyle="Solid" Font-Bold="True" Font-Size="12pt" ForeColor="White" Height="12pt" />
+                    <TodayDayStyle BackColor="#999999" ForeColor="White" />
+                    </asp:Calendar></div>
+                  </div>
+                </div>
+                    </ContentTemplate>
+        </asp:UpdatePanel>
+                &nbsp;
+    </div>
     </form>
 </body>
 </html>

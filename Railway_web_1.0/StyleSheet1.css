@@ -16,6 +16,7 @@
 
 .button 
 {
+    position:center;
     -webkit-transition-duration: 0.8s;
     transition-duration: 0.8s;
     padding: 10px;
@@ -58,12 +59,27 @@
     outline: none;
 }
 
-.calendar 
-{
-    outline: none;
-    right:0;
-}
-
 html {
     background-color: rgb(220, 224, 232);
+}
+
+#main_div {
+    display: inline-block;
+}
+
+.container {
+    overflow: hidden;
+    width: 1266px
+}
+
+.box {
+    white-space: nowrap;
+    width: 1266px;
+}
+
+.box div {
+    height: 250px;
+        width: 422px;
+        display: inline-block;
+        border: 1px solid black
 }
