@@ -35,6 +35,7 @@ namespace Railway_web_1._0
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Response.Write("<script>window.alert('ku-ku');</script>");
             using (NpgsqlConnection cn = new NpgsqlConnection(conn_string))
             {
                 cn.Open();
@@ -226,12 +227,15 @@ namespace Railway_web_1._0
             dt.Columns.Add("Дата начала курсир.");
             dt.Columns.Add("Дата окончания курсир.");
 
+            Label6.Text = "";
+            dg.Enabled = true;
+
             from = cb_from.SelectedValue;
             to = cb_to.SelectedValue;
 
             if (from == to)
             {
-                MessageBox.Show("Пункты отправки и прибытия не должны совпадать");
+                Label6.Text = "Пункты следования не могу совпадать";
                 return;
             }
             int i = 0;
@@ -266,14 +270,23 @@ namespace Railway_web_1._0
                     }
                 }
             }
-            if (dt.Rows.Count == 1)
+            if (dt.Rows.Count == 0)
             {
-                MessageBox.Show("Отсутствуют пригородные поезда");
+                Label6.Text = "Отсутствуют пригородные поезда";
+                DataRow workRow = dt.NewRow();
+                dt.Rows.Add(workRow);
+                dg.DataSource = dt;
+                dg.DataBind();
+                dg.Enabled = false;
+                return;
             }
-            Save.list = new List<Train>(selected_trains);
-            dg.DataSource = dt;
-            dg.DataBind();
-            Label4.Visible = true;
+            else
+            {
+                Save.list = new List<Train>(selected_trains);
+                dg.DataSource = dt;
+                dg.DataBind();
+                Label4.Visible = true;
+            }
         }
 
         protected void dg_SelectedIndexChanged(object sender, EventArgs e)
