@@ -59,11 +59,6 @@
     outline: none;
 }
 
-.calendar {
-    outline: none;
-    display:inline-block;
-}
-
 html {
     background-color: rgb(220, 224, 232);
 }
