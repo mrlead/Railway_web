@@ -31,7 +31,6 @@ namespace Railway_web_1._0
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            using (NpgsqlConnection cn = new NpgsqlConnection(conn_string))
             if (!IsPostBack)
             {
                 using (NpgsqlConnection cn = new NpgsqlConnection(conn_string))
@@ -282,7 +281,6 @@ namespace Railway_web_1._0
             }
             else
             {
-                Save.list = new List<Train>(selected_trains);
                 dg.DataSource = dt;
                 dg.DataBind();
                 Label4.Visible = true;
