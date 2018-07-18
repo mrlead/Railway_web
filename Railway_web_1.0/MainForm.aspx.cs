@@ -21,71 +21,68 @@ namespace Railway_web_1._0
             public List<string> end_date = new List<string>();
         }
 
-        string conn_string = "Server=127.0.0.1; Port=5432; User Id=postgres; Password=632123; Database=postgres";
+        string conn_string = "Server=127.0.0.1; Port=5432; User Id=postgres; Password=1236321; Database=postgres";
         string sql = "select * from trainlist_view";
-        List<string> station_name = new List<string>();
-        List<Train> train_list = new List<Train>();
-        List<Train> selected_trains = new List<Train>(Save.list);
         Train tr = new Train();
         DataTable dt = new DataTable();
         DataTable dt_1 = new DataTable();
-
         string from;
         string to;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Response.Write("<script>window.alert('ku-ku');</script>");
             using (NpgsqlConnection cn = new NpgsqlConnection(conn_string))
+            if (!IsPostBack)
             {
-                cn.Open();
-                using (NpgsqlCommand comm = new NpgsqlCommand(sql, cn))
+                using (NpgsqlConnection cn = new NpgsqlConnection(conn_string))
                 {
-                    NpgsqlDataReader reader = comm.ExecuteReader();
-                    while (reader.Read())
+                    cn.Open();
+                    using (NpgsqlCommand comm = new NpgsqlCommand(sql, cn))
                     {
-                        Unique(reader.GetString(2));
-                        tr.num.Add(reader.GetInt32(0).ToString());
-                        tr.unum.Add(reader.GetInt32(1).ToString());
-                        tr.station.Add(reader.GetString(2));
-                        Union(tr.to_time, reader.GetInt16(3).ToString(), reader.GetInt16(4).ToString());
-                        Union(tr.from_time, reader.GetInt16(5).ToString(), reader.GetInt16(6).ToString());
-                        try { tr.date_diff.Add(reader.GetInt16(7).ToString()); }
-                        catch { tr.date_diff.Add("0"); }
-                        tr.start_date.Add(reader.GetDate(8).ToString());
-                        try { tr.end_date.Add(reader.GetDate(9).ToString()); }
-                        catch { tr.end_date.Add(null); }
+                        NpgsqlDataReader reader = comm.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Unique(reader.GetString(2));
+                            tr.num.Add(reader.GetInt32(0).ToString());
+                            tr.unum.Add(reader.GetInt32(1).ToString());
+                            tr.station.Add(reader.GetString(2));
+                            Union(tr.to_time, reader.GetInt16(3).ToString(), reader.GetInt16(4).ToString());
+                            Union(tr.from_time, reader.GetInt16(5).ToString(), reader.GetInt16(6).ToString());
+                            try { tr.date_diff.Add(reader.GetInt16(7).ToString()); }
+                            catch { tr.date_diff.Add("0"); }
+                            tr.start_date.Add(reader.GetDate(8).ToString());
+                            try { tr.end_date.Add(reader.GetDate(9).ToString()); }
+                            catch { tr.end_date.Add(null); }
+                        }
                     }
                 }
-            }
-            Reset_list(cb_from);
-            Reset_list(cb_to);
-            Init_train();
-            station_name.Sort();
-            tb_from_TextChanged(null, null);
-            tb_to_TextChanged(null, null);
-            try
-            {
-                cb_from.SelectedIndex = Save.from_name;
-            }
-            catch
-            {
-                cb_from.SelectedIndex = 0;
-            }
-            try
-            {
-                cb_to.SelectedIndex = Save.to_name;
-            }
-            catch
-            {
-                cb_to.SelectedIndex = 0;
-            }
-            //cb_to.SelectedIndex = 0;
+                Save.station_name.Sort();
+                Reset_list(cb_from);
+                Reset_list(cb_to);
+                try
+                {
+                    cb_from.SelectedIndex = cb_from.Items.IndexOf(new ListItem(Save.from_name));
+                }
+                catch
+                {
+                    cb_from.SelectedIndex = 0;
+                }
+                try
+                {
+                    cb_to.SelectedIndex = cb_to.Items.IndexOf(new ListItem(Save.from_name));
+                }
+                catch
+                {
+                    cb_to.SelectedIndex = 0;
+                }
+                Init_train();
+            } 
         }
 
         //Разбиение списка на отдельные поезда
         private void Init_train()
         {
+            Save.trains.Clear();
             for (int i = 0; i < tr.unum.Count;)
             {
                 Train train = new Train();
@@ -116,7 +113,8 @@ namespace Railway_web_1._0
                         train.end_date.Add(tr.end_date[i]);
                     }
                 }
-                train_list.Add(train);
+                //train_list.Add(train);
+                Save.trains.Add(train);
             }
         }
 
@@ -130,9 +128,9 @@ namespace Railway_web_1._0
         private void Reset_list(DropDownList combo)
         {
             combo.Items.Clear();
-            for (int i = 0; i < station_name.Count; i++)
+            for (int i = 0; i < Save.station_name.Count; i++)
             {
-                combo.Items.Add(station_name[i]);
+                combo.Items.Add(Save.station_name[i]);
             }
         }
 
@@ -140,12 +138,12 @@ namespace Railway_web_1._0
         private bool Unique(string new_name)
         {
             string trimmed = new_name.Trim();
-            foreach (string item in station_name)
+            foreach (string item in Save.station_name)
             {
                 if (item == trimmed)
                     return false;
             }
-            station_name.Add(trimmed);
+            Save.station_name.Add(trimmed);
             return true;
         }
 
@@ -167,13 +165,14 @@ namespace Railway_web_1._0
                 cb_from.Enabled = true;
                 cb_from.Items.Clear();
                 Regex reg = new Regex(@"^" + tb_from.Text, RegexOptions.IgnoreCase);
-                foreach (string item in station_name)
+                foreach (string item in Save.station_name)
                 {
                     if (reg.Match(item).Success)
                     {
                         cb_from.Items.Add(item);
                     }
                 }
+                cb_from.SelectedIndex = 0;
             }
             catch
             {
@@ -183,25 +182,26 @@ namespace Railway_web_1._0
             }
             finally
             {
-                Save.from_name = cb_from.SelectedIndex;
+                Save.from_name = cb_from.SelectedValue;
                 bEnter.Enabled = cb_to.Enabled & cb_from.Enabled;
             }
         }
 
-        protected void tb_to_TextChanged(object sender, EventArgs e)
+        public void tb_to_TextChanged(object sender, EventArgs e)
         {
             try
             {
                 cb_to.Enabled = true;
                 cb_to.Items.Clear();
                 Regex reg = new Regex(@"^" + tb_to.Text, RegexOptions.IgnoreCase);
-                foreach (string item in station_name)
+                foreach (string item in Save.station_name)
                 {
                     if (reg.Match(item).Success)
                     {
                         cb_to.Items.Add(item);
                     }
                 }
+                cb_to.SelectedIndex = 0;
             }
             catch
             {
@@ -211,7 +211,7 @@ namespace Railway_web_1._0
             }
             finally
             {
-                Save.to_name = cb_to.SelectedIndex;
+                Save.to_name = cb_to.SelectedValue;
                 bEnter.Enabled = cb_to.Enabled & cb_from.Enabled;
             }
         }
@@ -239,30 +239,30 @@ namespace Railway_web_1._0
                 return;
             }
             int i = 0;
-            selected_trains.Clear();
+            Save.selected_trains.Clear();
             dt.Rows.Clear();
             iteration:
-            for (; i < train_list.Count; i++)
+            for (; i < Save.trains.Count; i++)
             {
-                for (int j = 0; j < train_list[i].station.Count; j++)
+                for (int j = 0; j < Save.trains[i].station.Count; j++)
                 {
-                    if (train_list[i].station[j] == from)
+                    if (Save.trains[i].station[j] == from)
                     {
-                        for (j += 1; j < train_list[i].station.Count; j++)
+                        for (j += 1; j < Save.trains[i].station.Count; j++)
                         {
-                            if (train_list[i].station[j] == to && DateTime.Parse(train_list[i].start_date[j]) <= Save.low && (train_list[i].end_date[j] == null || DateTime.Parse(train_list[i].end_date[j]) >= Save.high))
+                            if (Save.trains[i].station[j] == to && DateTime.Parse(Save.trains[i].start_date[j]) <= Save.low && (Save.trains[i].end_date[j] == null || DateTime.Parse(Save.trains[i].end_date[j]) >= Save.high))
                             {
                                 DataRow workRow = dt.NewRow();
-                                workRow[0] = UniqNum(train_list[i]);
+                                workRow[0] = UniqNum(Save.trains[i]);
                                 workRow[1] = from;
                                 workRow[2] = to;
-                                workRow[3] = train_list[i].from_time[train_list[i].station.IndexOf(from)];
-                                workRow[4] = train_list[i].to_time[train_list[i].station.IndexOf(to)];
-                                workRow[5] = train_list[i].date_diff[0];
-                                workRow[6] = train_list[i].start_date[0];
-                                workRow[7] = train_list[i].end_date[0];
+                                workRow[3] = Save.trains[i].from_time[Save.trains[i].station.IndexOf(from)];
+                                workRow[4] = Save.trains[i].to_time[Save.trains[i].station.IndexOf(to)];
+                                workRow[5] = Save.trains[i].date_diff[0];
+                                workRow[6] = Save.trains[i].start_date[0];
+                                workRow[7] = Save.trains[i].end_date[0];
                                 dt.Rows.Add(workRow);
-                                selected_trains.Add(train_list[i]);
+                                Save.selected_trains.Add(Save.trains[i]);
                                 i++;
                                 goto iteration;
                             }
@@ -300,17 +300,17 @@ namespace Railway_web_1._0
             label3.Text = null;
             try
             {
-                for (int i = 0; i < selected_trains[index].station.Count; i++)
+                for (int i = 0; i < Save.selected_trains[index].station.Count; i++)
                 {
                     DataRow workRow = dt_1.NewRow();
-                    workRow[0] = selected_trains[index].station[i];
+                    workRow[0] = Save.selected_trains[index].station[i];
                     if (i != 0)
-                        workRow[1] = selected_trains[index].to_time[i];
-                    if (i != selected_trains[index].station.Count - 1)
-                        workRow[2] = selected_trains[index].from_time[i];
+                        workRow[1] = Save.selected_trains[index].to_time[i];
+                    if (i != Save.selected_trains[index].station.Count - 1)
+                        workRow[2] = Save.selected_trains[index].from_time[i];
                     dt_1.Rows.Add(workRow);
                 }
-                label3.Text = "Поезд \"" + selected_trains[index].station[0] + "-" + selected_trains[index].station[selected_trains[index].station.Count - 1] + "\"";
+                label3.Text = "Поезд \"" + Save.selected_trains[index].station[0] + "-" + Save.selected_trains[index].station[Save.selected_trains[index].station.Count - 1] + "\"";
                 dg_1.DataSource = dt_1;
                 dg_1.DataBind();
                 Label5.Visible = true;
@@ -320,17 +320,17 @@ namespace Railway_web_1._0
 
         protected void cb_to_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Save.to_name = cb_to.SelectedIndex;
+            Save.to_name = cb_to.SelectedValue;
         }
 
         protected void cb_from_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Save.from_name = cb_from.SelectedIndex;
+            Save.from_name = cb_from.SelectedValue;
         }
 
-        protected void cb_from_TextChanged(object sender, EventArgs e)
-        {
-            Save.to_name = cb_to.SelectedIndex;
+        protected void dg_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+        { 
+            Save.selected_train_indx = dg.SelectedIndex;
         }
 
         protected void Button1_Click1(object sender, EventArgs e)
